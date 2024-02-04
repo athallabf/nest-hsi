@@ -10,26 +10,26 @@ import {
 import { AppService } from './app.service';
 import { Menu } from './interface/menu.interface';
 
-@Controller()
+@Controller('menus')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('menus')
+  @Get()
   getMenus(): Menu[] {
     return this.appService.getMenus();
   }
 
-  @Post('menus')
+  @Post()
   createMenu(@Body() menu: Menu): Menu {
     return this.appService.createMenu(menu);
   }
 
-  @Delete('menus/:id')
+  @Delete(':id')
   deleteMenu(@Param('id') id: number): Menu | string {
     return this.appService.deleteMenu(id);
   }
 
-  @Put('menus/:id')
+  @Put(':id')
   updateMenu(
     @Param('id') id: number,
     @Body() updatedMenu: Partial<Menu>,

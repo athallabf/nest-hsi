@@ -23,7 +23,6 @@ export class AppService {
 
     const result: Menu = dummyData[indexMenu];
     dummyData.slice(indexMenu, 1);
-    console.log(result);
     return result;
   }
 
