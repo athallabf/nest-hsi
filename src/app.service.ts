@@ -9,6 +9,7 @@ export class AppService {
   }
 
   createMenu(menu: Menu): Menu {
+    menu.id = Math.floor(Math.random() * 1000) + 1;
     dummyData.push(menu);
     return menu;
   }

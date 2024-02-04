@@ -5,6 +5,7 @@ interface MenuItems {
 }
 
 export interface Menu {
+  id: number;
   title: string;
   description?: string;
   items: MenuItems[];

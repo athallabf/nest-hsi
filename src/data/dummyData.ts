@@ -2,6 +2,7 @@ import { Menu } from 'src/interface/menu.interface';
 
 export const dummyData: Menu[] = [
   {
+    id: 1,
     title: 'Paket Nasi + Ayam Bakar',
     description: 'ayam bakar khas daerah xyz',
     items: [
@@ -19,6 +20,7 @@ export const dummyData: Menu[] = [
     price: 21000,
   },
   {
+    id: 2,
     title: 'Paket Nasi + Ikan bakar',
     description: 'ikan bakar khas daerah xyz',
     items: [
