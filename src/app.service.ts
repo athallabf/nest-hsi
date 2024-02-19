@@ -1,39 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { dummyData } from './data/dummyData';
-import { Menu } from './interface/menu.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Menu } from './entity/menu.entity';
 
 @Injectable()
 export class AppService {
-  getMenus(): Menu[] {
-    return dummyData;
+  constructor(
+    @InjectRepository(Menu) private readonly menuRepository: Repository<Menu>,
+  ) {}
+
+  async createMenu(menuData: Partial<Menu>): Promise<Menu> {
+    const menu = this.menuRepository.create(menuData);
+    return this.menuRepository.save(menu);
   }
 
-  createMenu(menu: Menu): Menu {
-    menu.id = Math.floor(Math.random() * 1000) + 1;
-    dummyData.push(menu);
-    return menu;
+  async getMenuById(id: number): Promise<Menu> {
+    return this.menuRepository.findOne({
+      where: { id },
+    });
   }
 
-  deleteMenu(id: number): Menu | string {
-    const indexMenu = dummyData.findIndex((menu) => menu.id === id);
-
-    if (indexMenu === -1) {
-      return 'Tidak ditemukan menu dengan id tersebut';
-    }
-
-    const result: Menu = dummyData[indexMenu];
-    dummyData.slice(indexMenu, 1);
-    return result;
+  async updateMenu(id: number, menuData: Partial<Menu>): Promise<Menu> {
+    await this.menuRepository.update(id, menuData);
+    return this.getMenuById(id);
   }
 
-  updateMenu(id: number, updatedMenu: Partial<Menu>): Menu | string {
-    const indexMenu = dummyData.findIndex((menu) => menu.id === id);
+  async deleteMenu(id: number): Promise<void> {
+    await this.menuRepository.delete(id);
+  }
 
-    if (indexMenu === -1) {
-      return 'Gagal melakukan update atau id tidak dikenali';
-    }
-
-    dummyData[indexMenu] = { ...dummyData[indexMenu], ...updatedMenu };
-    return dummyData[indexMenu];
+  async getAllMenus(): Promise<Menu[]> {
+    return this.menuRepository.find();
   }
 }

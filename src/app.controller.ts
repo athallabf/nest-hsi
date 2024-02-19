@@ -8,24 +8,23 @@ import {
   Put,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Menu } from './interface/menu.interface';
-
+import { Menu } from './entity/menu.entity';
 @Controller('menus')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getMenus(): Menu[] {
-    return this.appService.getMenus();
+  getMenus(): Promise<Menu[]> {
+    return this.appService.getAllMenus();
   }
 
   @Post()
-  createMenu(@Body() menu: Menu): Menu {
+  createMenu(@Body() menu: Menu): Promise<Menu> {
     return this.appService.createMenu(menu);
   }
 
   @Delete(':id')
-  deleteMenu(@Param('id') id: number): Menu | string {
+  deleteMenu(@Param('id') id: number): Promise<void> {
     return this.appService.deleteMenu(id);
   }
 
@@ -33,7 +32,7 @@ export class AppController {
   updateMenu(
     @Param('id') id: number,
     @Body() updatedMenu: Partial<Menu>,
-  ): Menu | string {
+  ): Promise<Menu> {
     return this.appService.updateMenu(id, updatedMenu);
   }
 }

@@ -1,6 +1,4 @@
-import { Menu } from 'src/interface/menu.interface';
-
-export const dummyData: Menu[] = [
+export const dummyData = [
   {
     id: 1,
     title: 'Paket Nasi + Ayam Bakar',
