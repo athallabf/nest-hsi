@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { User } from './../interface/user.interface';
+import { User } from './interface/user.interface';
 import { UsersService } from './users.service';
 
 @Controller('users')

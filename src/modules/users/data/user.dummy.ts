@@ -1,4 +1,5 @@
-import { User } from './../../interface/user.interface';
+import { User } from '../interface/user.interface';
+
 export const dummyUser: User[] = [
   {
     id: 1,
