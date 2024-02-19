@@ -4,7 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MenuItem } from './entity/menu-item.entity';
 import { Menu } from './entity/menu.entity';
-import { UsersModule } from './users/users.module';
+import { SchoolModule } from './modules/school/school.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -18,7 +19,10 @@ import { UsersModule } from './users/users.module';
       database: 'nest-hsi',
       entities: [MenuItem, Menu],
       synchronize: true,
+      autoLoadEntities: true,
     }),
+    TypeOrmModule.forFeature([Menu, MenuItem]),
+    SchoolModule,
   ],
   controllers: [AppController],
   providers: [AppService],
