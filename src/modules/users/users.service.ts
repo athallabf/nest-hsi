@@ -1,39 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { dummyUser } from './data/user.dummy';
-import { User } from './interface/user.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entity/user.entity';
+
 @Injectable()
 export class UsersService {
-  getUsers(): User[] {
-    return dummyUser;
+  constructor(
+    @InjectRepository(User) private readonly usersRepository: Repository<User>,
+  ) {}
+
+  async createUser(userData: Partial<User>): Promise<User> {
+    const user = this.usersRepository.create(userData);
+    return await this.usersRepository.save(user);
   }
 
-  createUser(user: User): User {
-    user.id = Math.floor(Math.random() * 1000) + 1;
-
-    dummyUser.push(user);
-    return user;
-  }
-
-  updateUser(id: number, updatedUser: Partial<User>): User | string {
-    const indexUser = dummyUser.findIndex((user) => user.id === id);
-
-    if (indexUser === -1) {
-      return 'User tidak ditemukan';
-    }
-
-    dummyUser[indexUser] = { ...dummyUser[indexUser], ...updatedUser };
-    return dummyUser[indexUser];
-  }
-
-  deleteUser(id: number): User | string {
-    const indexUser = dummyUser.findIndex((user) => user.id === id);
-
-    if (indexUser === -1) {
-      return 'Tidak ditemukan user dengan id tersebut';
-    }
-
-    const result: User = dummyUser[indexUser];
-    dummyUser.splice(indexUser, 1);
-    return result;
+  async getUserByEmail(email: string): Promise<User> {
+    return await this.usersRepository.findOne({ where: { email } });
   }
 }

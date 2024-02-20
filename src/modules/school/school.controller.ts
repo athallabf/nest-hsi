@@ -6,11 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { SchoolService } from './school.service';
 
+@ApiTags('School')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('school')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}

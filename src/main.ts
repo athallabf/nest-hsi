@@ -11,6 +11,14 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  const config = new DocumentBuilder()
+    .setTitle('SANDBOX HSI')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(3005);
 }
 bootstrap();

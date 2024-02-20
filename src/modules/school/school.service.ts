@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+// import { UsersService } from '../users/users.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { ClassStudent } from './entity/class.entity';
@@ -12,7 +13,7 @@ export class SchoolService {
     @InjectRepository(ClassStudent)
     private readonly classRepository: Repository<ClassStudent>,
     @InjectRepository(Student)
-    private readonly studentRepository: Repository<Student>,
+    private readonly studentRepository: Repository<Student>, // private readonly usersService: UsersService,
   ) {}
 
   async createClass(className: string): Promise<ClassStudent> {
